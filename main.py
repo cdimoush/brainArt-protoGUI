@@ -8,40 +8,36 @@ from kivy.core.window import Window
 import math
 import time
 
+'''
+    Using Text files as nodes between the programs was wildly irresponsible.
 
-class XMotor(Widget):
-    pos = 400, 50
+    The new plan is for the simulator to read a csv file, don't really want to try to DIY gcode.
+    So The art algorithm will run first and create the csv then the simulator will run.
+
+    Also the simulator runs at 'real' speed, it goes slow to show the carriage and stepper movements.
+    I want to create a second simulator to show to art immediately.
+
+    It would be pretty dope to have a launch file that starts all the programs in order.
+'''
+
+
+class Motor(Widget):
+    pos = 0, 0
     r = 50
-    c = pos[0] + r, pos[1] + r
+    c = 0, 0
     theta = 0
-    l_pts = [c[0], c[1], c[0] + r, c[1]]
+    l_pts = []
     l = Line()
 
-    def __init__(self, **kwargs):
-        super(XMotor, self).__init__(**kwargs)
+    def __init__(self, x_pos, y_pos):
+        super(Motor, self).__init__()
+        self.pos = x_pos, y_pos
+        self.c = self.pos[0] + self.r, self.pos[1] + self.r
+        self.l_pts = [self.c[0], self.c[1], self.c[0] + self.r, self.c[1]]
         with self.canvas.before:
             Color(0, 0, 1)
             Ellipse(pos=self.pos, size=(100, 100))
             self.add_widget(Label(pos=(400, 125), text='X Stepper'))
-        with self.canvas:
-            Color(0, 0, 0)
-            self.l = Line(points=self.l_pts, width=2)
-
-
-class YMotor(Widget):
-    pos = 400, 250
-    r = 50
-    c = pos[0] + r, pos[1] + r
-    theta = 0
-    l_pts = [c[0], c[1], c[0] + r, c[1]]
-    l = Line()
-
-    def __init__(self, **kwargs):
-        super(YMotor, self).__init__(**kwargs)
-        with self.canvas.before:
-            Color(0, 0, 1)
-            Ellipse(pos=self.pos, size=(100, 100))
-            self.add_widget(Label(pos=(400, 325), text='Y Stepper'))
         with self.canvas:
             Color(0, 0, 0)
             self.l = Line(points=self.l_pts, width=2)
@@ -68,8 +64,8 @@ class ArtWork(Widget):
 
 class GUIWidget(Widget):
 
-    xm = XMotor()
-    ym = YMotor()
+    xm = Motor(400, 50)
+    ym = Motor(400, 250)
     p = Pen()
     a = ArtWork()
 
