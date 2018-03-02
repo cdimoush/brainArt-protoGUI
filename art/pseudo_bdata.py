@@ -9,4 +9,4 @@ for i in range(0, 100):
 
 output = np.array(pseudo_data)
 print(output)
-np.save('brain_data.npy', output)
+np.save('data.brain_data.npy', output)

@@ -1,7 +1,7 @@
 from tkinter import *
 import numpy as np
 
-data = np.load('square_matrix.npy')
+data = np.load('art/data/art_array.npy')
 master = Tk()
 
 w = Canvas(master, width=800, height=600)

@@ -1,0 +1,10 @@
+import threading
+import subprocess
+import time
+
+subprocess.call('python3 art/art_generator.py', shell=True)
+
+# check that art_genrator.py is done
+
+
+subprocess.call('python3 art/art_generator.py', shell=True
